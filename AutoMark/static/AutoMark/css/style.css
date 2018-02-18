@@ -1,12 +1,45 @@
 .add_acc{
+    float: left;
     position: relative;
     width: 250px;
-    height: 150px;
+    height: 160px;
+    background-image: url("../media/insta_background.png");
     border-color: #f8f8f8;
     border-style: solid;
     border-width: 2px;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-right: 10px;
+}
+
+.add_acc_login{
+    float: left;
+    position: relative;
+    width: 200px;
+    height: 160px;
+    background-image: url("../media/insta_background.png");
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-right: 10px;
+}
+
+.insta_img{
+    margin-top: 10px;
+    margin-left: 50px;
+    width: 100px;
+    height: 100px;
+}
+
+.inner_add_acc{
+    padding: 20px 20px 20px 20px;
+}
+
+.add_acc_login_inner{
+    padding-left: 35px;
+    padding-right: 50px;
+    font-size: 18px;
+    overflow: auto;
+    color: #ffffff;
 }
 
 .insta_login{
@@ -24,4 +57,8 @@
     background-color: #3f729b;
     width: 80px;
     height: 30px;
+}
+
+.inst-icon{
+    margin-left: 100px;
 }

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django import forms
 from .forms import UserRegistrationForm
+from AutoMark.models import InstagramAccount
 
 
 # Create your views here.
@@ -17,7 +18,14 @@ def facebook(request):
 
 
 def instagram(request):
-    return render(request, 'instagram.html')
+    if request.method == 'POST':
+        form = InstagramLogin(request.POST)
+        if form.is_valid():
+            userObj = form.cleaned_data
+            new_account = InstagramAccount(username=userObj['username'])
+            new_account.save()
+    all_instagram_accounts = InstagramAccount.objects.all()
+    return render(request, 'instagram.html', {'accounts': all_instagram_accounts})
 
 
 def stats(request):
