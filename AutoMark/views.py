@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django import forms
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, InstagramSettingsForm
 from AutoMark.models import InstagramAccount
 
 
@@ -17,9 +17,20 @@ def facebook(request):
     return render(request, 'facebook.html')
 
 
+def instagram_settings(request):
+    if request.method == 'POST':
+        form = InstagramSettingsForm(request.POST)
+        if form.is_valid():
+            pass
+            # user_obj = form.cleaned_data
+            # username = user_obj['username']
+            # password = user_obj['password']
+    return render(request, 'instagram.html')
+
+
 def instagram(request):
     if request.method == 'POST':
-        form = InstagramLogin(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
             userObj = form.cleaned_data
             new_account = InstagramAccount(username=userObj['username'])

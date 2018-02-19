@@ -98,18 +98,23 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Instagram</h1>
                         {% for account in accounts %}
-                                <div data-toggle="modal" data-target="#myModal" class="add_acc_login">
-                                    <img class="insta_img" src="{% static 'AutoMark/media/insta_icon.png' %}">
-                                    <div class="add_acc_login_inner">
-                                        {{ account.username }}
+                            <div class="add_acc_login">
+                                <img class="insta_img" src="{% static 'AutoMark/media/insta_icon.png' %}">
+                                <div class="add_acc_login_inner">
+                                    Account: {{ account.username }}
+                                    <div class="buttons_inner_acc">
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#insta_settings_modal">Settings</button>
+                                            <button type="button" class="btn btn-primary">Report</button>
                                     </div>
                                 </div>
+                            </div>
                         {% endfor %}
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            {% include "modals/instagram_modal.html" with account=account %}
+                        <div class="modal fade" id="insta_settings_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            {% include "modals/instagram_modal.html" %}
                         </div>
                         <div class="add_acc">
                             <div class="inner_add_acc">
+                                <h3 class=add_acc_login_inner>Login</h3>
                                 <form role="form" action="" method="post" name="Login_Instagram" class="form-signin">
                                     {% csrf_token %}
                                     <fieldset>
@@ -119,7 +124,7 @@
                                         <div class="form-group">
                                             <input class="form-control" type="password" name="password" placeholder="password" required="">
                                         </div>
-                                        <button class="insta_login"  name="Submit" value="Login_instagram" type="submit"><i class="fa fa-instagram"></i> Sign in</button>
+                                        <button class="btn btn-primary"  name="Submit" value="Login_instagram" type="submit"><i class="fa fa-instagram"></i> Sign in</button>
                                     </fieldset>
                                 </form>
                             </div>
