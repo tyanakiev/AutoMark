@@ -8,6 +8,7 @@ class InstagramAccount(models.Model):
 
 class InstagramSettings(models.Model):
 
+    id = models.AutoField(primary_key=True)
     tags = models.CharField(max_length=1024)
     locations = models.CharField(max_length=1024)
     likes_hour = models.CharField(max_length=32)

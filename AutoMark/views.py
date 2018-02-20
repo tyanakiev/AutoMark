@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django import forms
 from .forms import UserRegistrationForm, InstagramSettingsForm
-from AutoMark.models import InstagramAccount
+from AutoMark.models import InstagramAccount, InstagramSettings
 
 
 # Create your views here.
@@ -21,10 +21,18 @@ def instagram_settings(request):
     if request.method == 'POST':
         form = InstagramSettingsForm(request.POST)
         if form.is_valid():
-            pass
-            # user_obj = form.cleaned_data
-            # username = user_obj['username']
-            # password = user_obj['password']
+            user_obj = form.cleaned_data
+            new_account = InstagramSettings(
+                user_obj['tags'],
+                user_obj['locations'],
+                user_obj['likes_hour'],
+                user_obj['comments_hour'],
+                user_obj['follows_hour'],
+                user_obj['unfollows_hour'],
+                user_obj['posted'],
+                user_obj['comments']
+            )
+            new_account.save()
     return render(request, 'instagram.html')
 
 

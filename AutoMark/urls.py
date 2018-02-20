@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^automark/twitter', views.twitter, name='twitter'),
     url(r'^automark/facebook', views.facebook, name='facebook'),
     url(r'^automark/instagram', views.instagram, name='instagram'),
+    url(r'^automark/instagram', views.instagram, name='instagram_settings'),
     url(r'^automark/statistics', views.stats, name='stats'),
     url(r'^register/', views.register),
 ]
