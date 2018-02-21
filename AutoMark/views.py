@@ -22,6 +22,7 @@ def instagram_settings(request):
         form = InstagramSettingsForm(request.POST)
         if form.is_valid():
             user_obj = form.cleaned_data
+            print(user_obj)
             new_account = InstagramSettings(
                 user_obj['tags'],
                 user_obj['locations'],
@@ -33,7 +34,9 @@ def instagram_settings(request):
                 user_obj['comments']
             )
             new_account.save()
-    return render(request, 'instagram.html')
+    else:
+        form = InstagramSettingsForm()
+    return render(request, 'instagram/insta_settings.html', {'form': form})
 
 
 def instagram(request):
@@ -52,7 +55,7 @@ def stats(request):
 
 
 def automark(request):
-    return render(request, 'base.html')
+    return render(request, 'dashboard.html')
 
 
 def register(request):
