@@ -1,0 +1,13 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form action="" method="POST" id="post-form">
+            {% csrf_token %}
+            <div class="fieldWrapper" id="the_post">
+                {{form.as_p}}
+            </div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <input type="submit" lass="btn btn-success" id="save_settings" value="Post" class="tiny button">
+        </form>
+    </div>
+</div>
+

@@ -8,10 +8,9 @@
             <div class="add_acc_login_inner">
                 Account: {{ account.username }}
                 <div class="buttons_inner_acc">
-                    <form action="{% url 'instagram_settings' account.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success">Settings</button>
-                    </form>
+                    <a href="{% url 'instagram_settings' pk=account.id%}">
+                      <button type="button"  class="btn btn-success" data-toggle="modal">Settings</button>
+                    </a>
                     <button type="button" class="btn btn-primary">Report</button>
                 </div>
             </div>

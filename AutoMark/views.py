@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django import forms
+from django.urls import reverse
 from .forms import UserRegistrationForm, InstagramSettingsForm
 from AutoMark.models import InstagramAccount, InstagramSettings
 
@@ -17,13 +18,15 @@ def facebook(request):
     return render(request, 'facebook.html')
 
 
-def instagram_settings(request):
+def instagram_settings(request, pk=None):
+    saved_settings = None
     if request.method == 'POST':
         form = InstagramSettingsForm(request.POST)
         if form.is_valid():
             user_obj = form.cleaned_data
             print(user_obj)
             new_account = InstagramSettings(
+                pk,
                 user_obj['tags'],
                 user_obj['locations'],
                 user_obj['likes_hour'],
@@ -36,7 +39,19 @@ def instagram_settings(request):
             new_account.save()
     else:
         form = InstagramSettingsForm()
-    return render(request, 'instagram/insta_settings.html', {'form': form})
+        try:
+            saved_settings = InstagramSettings.objects.get(id=pk)
+            form = InstagramSettingsForm({'tags': saved_settings.tags,
+                                          'locations': saved_settings.locations,
+                                          'likes_hour': saved_settings.likes_hour,
+                                          'comments_hour': saved_settings.comments_hour,
+                                          'follows_hour': saved_settings.follows_hour,
+                                          'unfollows_hour': saved_settings.unfollows_hour,
+                                          'posted': saved_settings.posted,
+                                          'comments': saved_settings.comments})
+        except:
+            print("There are no settings with that id: ", pk)
+    return render(request, 'insta_settings.html', {'form': form, 'id': pk, 'saved_settings': saved_settings})
 
 
 def instagram(request):
