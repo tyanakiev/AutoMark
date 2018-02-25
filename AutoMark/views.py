@@ -7,14 +7,16 @@ from .forms import UserRegistrationForm, InstagramSettingsForm, InstagramAccount
 from AutoMark.models import InstagramAccount, InstagramSettings
 
 
-# Create your views here.
-
 def twitter(request):
     return render(request, 'twitter.html')
 
 
 def facebook(request):
     return render(request, 'facebook.html')
+
+
+def user_profile(request):
+    return render(request, 'user_profile.html')
 
 
 def instagram_settings(request, pk=None):
@@ -102,8 +104,6 @@ def register(request):
             if not (User.objects.filter(username=username).exists()):
                 user = User.objects.create_user(username=username, password=password)
                 user.save()
-                # User.objects.create_user(username, password)
-                # user = authenticate(username=username, password=password)
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:

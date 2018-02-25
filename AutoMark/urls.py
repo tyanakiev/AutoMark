@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^automark/instagram', views.instagram, name='instagram'),
     url(r'^automark/statistics', views.stats, name='stats'),
     url(r'^register/', views.register),
+    url(r'^user_profile/', views.user_profile, name='user_profile'),
+
 ]
 # delete_insta_acc
