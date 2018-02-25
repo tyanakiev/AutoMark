@@ -11,7 +11,9 @@
                     <a href="{% url 'instagram_settings' pk=account.id%}">
                       <button type="button"  class="btn btn-success" data-toggle="modal">Settings</button>
                     </a>
-                    <button type="button" class="btn btn-primary">Report</button>
+                    <a href="{% url 'instagram_report' pk=account.id%}">
+                        <button type="button" class="btn btn-primary">Report</button>
+                    </a>
                 </div>
             </div>
         </div>

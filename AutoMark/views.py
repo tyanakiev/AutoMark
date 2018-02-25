@@ -69,6 +69,11 @@ def stats(request):
     return render(request, 'stats.html')
 
 
+def instagram_report(request, pk=None):
+    instagram_account = InstagramAccount.objects.get(id=pk)
+    return render(request, 'insta_report.html', {'account': instagram_account})
+
+
 def automark(request):
     return render(request, 'dashboard.html')
 
