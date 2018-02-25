@@ -17,20 +17,36 @@ class UserRegistrationForm(forms.Form):
     )
 
 
+class InstagramAccountForm(forms.Form):
+    username = forms.CharField(
+        required=True,
+        label='Username',
+        max_length=32,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    password = forms.CharField(
+        required=True,
+        label='Password',
+        max_length=32,
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
+
+
 class InstagramSettingsForm(forms.Form):
 
     tags = forms.CharField(
         required=True,
         label='Tags',
         max_length=1024,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'data-role': 'tags-input'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'data-role': 'tagsinput'})
     )
 
     locations = forms.CharField(
         required=False,
         label='Locations',
         max_length=1024,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'data-role': 'tags-input'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'data-role': 'tagsinput'})
     )
 
     likes_hour = forms.CharField(
@@ -72,5 +88,5 @@ class InstagramSettingsForm(forms.Form):
         required=False,
         label='Comments',
         max_length=32,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'data-role': 'tags-input'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'data-role': 'tagsinput'})
     )

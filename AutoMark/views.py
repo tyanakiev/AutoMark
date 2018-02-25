@@ -1,10 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django import forms
-from django.urls import reverse
-from .forms import UserRegistrationForm, InstagramSettingsForm
+from .forms import UserRegistrationForm, InstagramSettingsForm, InstagramAccountForm
 from AutoMark.models import InstagramAccount, InstagramSettings
 
 
@@ -54,16 +53,31 @@ def instagram_settings(request, pk=None):
     return render(request, 'insta_settings.html', {'form': form, 'id': pk, 'saved_settings': saved_settings})
 
 
+def i_worker_start(request, pk=None):
+    return redirect('instagram')
+
+
 def instagram(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = InstagramAccountForm(request.POST)
         if form.is_valid():
             userObj = form.cleaned_data
-            new_account = InstagramAccount(username=userObj['username'])
+            new_account = InstagramAccount(username=userObj['username'], created_by=request.user)
+            new_account.set_password(userObj['password'])
             new_account.save()
     all_instagram_accounts = InstagramAccount.objects.all()
-    return render(request, 'instagram.html', {'accounts': all_instagram_accounts})
+    form = InstagramAccountForm()
+    return render(request, 'instagram.html', {'accounts': all_instagram_accounts, 'form': form})
 
+
+def delete_insta_acc(request, pk=None):
+    if request.is_ajax() and request.method == 'POST':
+        i_account = InstagramAccount.objects.get(pk=pk)
+        i_account.delete()
+    all_instagram_accounts = InstagramAccount.objects.all()
+    form = InstagramAccountForm()
+    # return render(request, 'instagram.html', {'accounts': all_instagram_accounts, 'form': form})
+    return redirect('')
 
 def stats(request):
     return render(request, 'stats.html')
@@ -86,8 +100,10 @@ def register(request):
             username = userObj['username']
             password = userObj['password']
             if not (User.objects.filter(username=username).exists()):
-                User.objects.create_user(username, password)
-                user = authenticate(username=username, password=password)
+                user = User.objects.create_user(username=username, password=password)
+                user.save()
+                # User.objects.create_user(username, password)
+                # user = authenticate(username=username, password=password)
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:

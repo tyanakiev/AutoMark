@@ -3,35 +3,43 @@
 {% block content %}
     <h1 class="page-header">Instagram</h1>
     {% for account in accounts %}
-        <div class="add_acc_login">
-            <img class="insta_img" src="{% static 'AutoMark/media/insta_icon.png' %}">
-            <div class="add_acc_login_inner">
-                Account: {{ account.username }}
-                <div class="buttons_inner_acc">
-                    <a href="{% url 'instagram_settings' pk=account.id%}">
-                      <button type="button"  class="btn btn-success" data-toggle="modal">Settings</button>
-                    </a>
-                    <a href="{% url 'instagram_report' pk=account.id%}">
-                        <button type="button" class="btn btn-primary">Report</button>
-                    </a>
+        {% if request.user.username == account.created_by|stringformat:"s" or request.user.is_superuser%}
+
+            <div class="add_acc_login">
+                <img class="insta_img" src="{% static 'AutoMark/media/insta_icon.png' %}">
+                <div class="add_acc_login_inner">
+                    Account: {{ account.username }}
+                    <div class="buttons_inner_acc">
+                        <a href="{% url 'instagram_settings' pk=account.id%}">
+                          <button type="button"  class="btn btn-success" data-toggle="modal">Settings</button>
+                        </a>
+                        <a href="{% url 'instagram_report' pk=account.id%}">
+                            <button type="button" class="btn btn-primary">Report</button>
+                        </a>
+                        {% if request.user.is_superuser %}
+                            <button type="button" class="btn btn-danger delete_i_account" data-href="{% url 'delete_insta_acc' pk=account.id%}">Delete</button>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     {% endfor %}
     <div class="add_acc">
         <div class="inner_add_acc">
-            <h3 class=add_acc_login_inner>Login</h3>
+            <h4 class=add_acc_login_inner>Add Account</h4>
             <form role="form" action="" method="post" name="Login_Instagram" class="form-signin">
                 {% csrf_token %}
-                <fieldset>
-                    <div class="form-group">
-                        <input class="form-control" name="username" placeholder="username" required="" autofocus="" >
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="password" name="password" placeholder="password" required="">
-                    </div>
-                    <button class="btn btn-primary"  name="Submit" value="Login_instagram" type="submit"><i class="fa fa-instagram"></i> Sign in</button>
-                </fieldset>
+                {{ form }}
+                <input type="submit" class="btn btn-primary insta_add_button" value="Add" />
+{#                <fieldset>#}
+{#                    <div class="form-group">#}
+{#                        <input class="form-control" name="username" placeholder="username" required="" autofocus="" >#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                        <input class="form-control" type="password" name="password" placeholder="password" required="">#}
+{#                    </div>#}
+{#                    <button class="btn btn-primary"  name="Submit" value="Login_instagram" type="submit"><i class="fa fa-instagram"></i> Sign in</button>#}
+{#                </fieldset>#}
             </form>
         </div>
     </div>

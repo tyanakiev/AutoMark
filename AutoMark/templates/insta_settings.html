@@ -5,5 +5,9 @@
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Save" />
+        <a href="{% url 'i_worker_start' pk=id %}">
+            <input type="button" value="Start" />
+        </a>
     </form>
+
 {% endblock %}

@@ -1,25 +1,4 @@
 $(document).ready(function() {
-    $('#save_settings').click(function() {
-        $.ajax({
-            url: "instagram_settings/", // the endpoint
-            type: "POST", // http method
-            data: {the_post: $('#save_settings').val()}, // data sent with the post request
-
-            // handle a successful response
-            success: function (json) {
-                $('#save_settings').val(''); // remove the value from the input
-                console.log(json); // log the returned json to the console
-                console.log("success"); // another sanity check
-            },
-
-            // handle a non-successful response
-            error: function (xhr, errmsg, err) {
-                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " + errmsg +
-                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-            }
-        });
-    });
 
  // CSRF code
     function getCookie(name) {
@@ -52,4 +31,15 @@ $(document).ready(function() {
             }
         }
     });
+    $(".delete_i_account").click(function(){
+    var postData = {csrfmiddlewaretoken: csrftoken}
+    $.ajax({
+        type: "POST",
+        url: $(this).attr("data-href"),
+        data: postData,
+        success: function(new_number_of_upvotes) {
+            $(this).html(new_number_of_upvotes)
+        }
+    })
+})
 });

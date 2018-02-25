@@ -66,5 +66,8 @@
 .buttons_inner_acc{
     position: absolute;
     bottom: 5px;
-    padding-left: 30px;
+}
+
+.insta_add_button{
+    margin-left: 85px;
 }

@@ -1,9 +1,15 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password
 
 
 class InstagramAccount(models.Model):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=30)
+    password = models.CharField(max_length=30)
+    created_by = models.CharField(max_length=30)
+
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
 
 
 class InstagramSettings(models.Model):
