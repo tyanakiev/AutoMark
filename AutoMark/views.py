@@ -76,8 +76,8 @@ def delete_insta_acc(request, pk=None):
         i_account.delete()
     all_instagram_accounts = InstagramAccount.objects.all()
     form = InstagramAccountForm()
-    # return render(request, 'instagram.html', {'accounts': all_instagram_accounts, 'form': form})
-    return redirect('')
+    return render(request, 'instagram.html', {'accounts': all_instagram_accounts, 'form': form})
+
 
 def stats(request):
     return render(request, 'stats.html')
