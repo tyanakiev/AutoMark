@@ -23,14 +23,14 @@ class InstagramSettingsForm(forms.Form):
         required=True,
         label='Tags',
         max_length=1024,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'data-role': 'tags-input'})
     )
 
     locations = forms.CharField(
         required=False,
         label='Locations',
         max_length=1024,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'data-role': 'tags-input'})
     )
 
     likes_hour = forms.CharField(
@@ -72,5 +72,5 @@ class InstagramSettingsForm(forms.Form):
         required=False,
         label='Comments',
         max_length=32,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'data-role': 'tags-input'})
     )

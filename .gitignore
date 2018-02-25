@@ -72,6 +72,7 @@ target/
 .ipynb_checkpoints
 
 # pyenv
+.idea*
 .python-version
 
 # celery beat schedule file

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <form action="{% url 'instagram_settings' id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Save" />
+    </form>
+{% endblock %}
