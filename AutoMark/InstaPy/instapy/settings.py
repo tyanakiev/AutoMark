@@ -1,3 +1,3 @@
 class Settings:
-    database_location = "./db/instapy.db"
-    browser_location = "./assets/chromedriver"
+    database_location = "AutoMark/InstaPy/db/instapy.db"
+    browser_location = "AutoMark/InstaPy/assets/chromedriver"

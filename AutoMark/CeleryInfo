@@ -1,0 +1,9 @@
+1) $ sudo apt-get install rabbitmq-server
+
+2) $ celery -A AutoMark worker -l info
+
+3) cd
+4) $ ./unix.sh
+
+5) cd /AutoMarketing/AutoMark
+6) $ celery -A AutoMark worker -l info

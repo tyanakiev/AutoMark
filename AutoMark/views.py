@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django import forms
 from .forms import UserRegistrationForm, InstagramSettingsForm, InstagramAccountForm
 from AutoMark.models import InstagramAccount, InstagramSettings
+from AutoMark.Celery.tasks import insta_py
 
 
 def twitter(request):
@@ -56,6 +57,11 @@ def instagram_settings(request, pk=None):
 
 
 def i_worker_start(request, pk=None):
+    insta_settings = {'username': 'instaautomark',
+                      'password': '',
+                      'comments': ['Wow', 'Amazing', 'Super!', 'This looks amazing.'],
+                      'tags': ['liverpool', 'lpfc', 'Liverpool Football']}
+    insta_py.delay(insta_settings)
     return redirect('instagram')
 
 
