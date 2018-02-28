@@ -4,8 +4,9 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django import forms
 from .forms import UserRegistrationForm, InstagramSettingsForm, InstagramAccountForm
-from AutoMark.models import InstagramAccount, InstagramSettings
+from AutoMark.models import InstagramAccount, InstagramSettings, InstagramCeleryTask
 from AutoMark.Celery.tasks import insta_py
+from celery.task.control import revoke
 
 
 def twitter(request):
@@ -22,6 +23,7 @@ def user_profile(request):
 
 def instagram_settings(request, pk=None):
     saved_settings = None
+    current_task = None
     if request.method == 'POST':
         form = InstagramSettingsForm(request.POST)
         if form.is_valid():
@@ -43,6 +45,7 @@ def instagram_settings(request, pk=None):
         form = InstagramSettingsForm()
         try:
             saved_settings = InstagramSettings.objects.get(id=pk)
+            current_task = InstagramCeleryTask.objects.get(pk=pk)
             form = InstagramSettingsForm({'tags': saved_settings.tags,
                                           'locations': saved_settings.locations,
                                           'likes_hour': saved_settings.likes_hour,
@@ -53,15 +56,25 @@ def instagram_settings(request, pk=None):
                                           'comments': saved_settings.comments})
         except:
             print("There are no settings with that id: ", pk)
-    return render(request, 'insta_settings.html', {'form': form, 'id': pk, 'saved_settings': saved_settings})
+    return render(request, 'insta_settings.html', {'form': form, 'id': pk,
+                                                   'saved_settings': saved_settings,
+                                                   'task': current_task})
 
 
 def i_worker_start(request, pk=None):
     insta_settings = {'username': 'instaautomark',
-                      'password': '',
+                      'password': 'insta123mark',
                       'comments': ['Wow', 'Amazing', 'Super!', 'This looks amazing.'],
                       'tags': ['liverpool', 'lpfc', 'Liverpool Football']}
-    insta_py.delay(insta_settings)
+    insta_py.delay(insta_settings, pk)
+    return redirect('instagram')
+
+
+def i_worker_stop(request, pk=None):
+    current_task = InstagramCeleryTask.objects.get(pk=pk)
+    revoke(current_task.task_id, terminate=True)
+    current_task.status = 'Stopped'
+    current_task.save()
     return redirect('instagram')
 
 
@@ -82,6 +95,10 @@ def delete_insta_acc(request, pk=None):
     if request.is_ajax() and request.method == 'POST':
         i_account = InstagramAccount.objects.get(pk=pk)
         i_account.delete()
+        saved_settings = InstagramSettings.objects.get(id=pk)
+        saved_settings.delete()
+        current_task = InstagramCeleryTask.objects.get(pk=pk)
+        current_task.delete()
     all_instagram_accounts = InstagramAccount.objects.all()
     form = InstagramAccountForm()
     return render(request, 'instagram.html', {'accounts': all_instagram_accounts, 'form': form})

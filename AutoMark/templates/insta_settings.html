@@ -4,9 +4,15 @@
     <form action="{% url 'instagram_settings' id %}" method="post">
         {% csrf_token %}
         {{ form }}
+        <div clas="task_status">
+            Status: {{ task.status }}
+        </div>
         <input type="submit" value="Save" />
         <a href="{% url 'i_worker_start' pk=id %}">
             <input type="button" value="Start" />
+        </a>
+        <a href="{% url 'i_worker_stop' pk=id %}">
+            <input type="button" value="Stop" />
         </a>
     </form>
 

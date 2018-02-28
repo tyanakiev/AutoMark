@@ -23,3 +23,10 @@ class InstagramSettings(models.Model):
     unfollows_hour = models.CharField(max_length=32)
     posted = models.CharField(max_length=32)
     comments = models.CharField(max_length=32)
+
+
+class InstagramCeleryTask(models.Model):
+    account_id = models.AutoField(primary_key=True)
+    task_id = models.CharField(max_length=30)
+    status = models.CharField(max_length=32)
+

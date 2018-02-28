@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 from AutoMark.celery import app
 from AutoMark.InstaPy.instapy import InstaPy
+from AutoMark.models import InstagramCeleryTask
 
 #
 # @app.task
@@ -14,11 +15,15 @@ from AutoMark.InstaPy.instapy import InstaPy
 
 
 @app.task
-def insta_py(settings):
+def insta_py(settings, account_id=None):
     session = InstaPy(username=settings['username'],
                       password=settings['password'],
-                      headless_browser=True,
+                      headless_browser=False,
                       multi_logs=True,)
+
+    task_id = insta_py.request.id
+    new_task = InstagramCeleryTask(account_id, task_id, 'Running')
+    new_task.save()
     try:
         # set these if you're locating the library in the /usr/lib/pythonX.X/ directory
         # Settings.database_location = '/path/to/instapy.db'
