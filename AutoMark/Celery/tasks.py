@@ -18,7 +18,7 @@ from AutoMark.models import InstagramCeleryTask
 def insta_py(settings, account_id=None):
     session = InstaPy(username=settings['username'],
                       password=settings['password'],
-                      headless_browser=False,
+                      headless_browser=True,
                       multi_logs=True,)
 
     task_id = insta_py.request.id
@@ -32,16 +32,16 @@ def insta_py(settings, account_id=None):
         session.login()
 
         # default enabled=False, follows ~ 10% of the users from the images, times=1
-        session.set_do_follow(enabled=True, percentage=10, times=2)
+        # session.set_do_follow(enabled=True, percentage=10, times=2)
         session.set_use_clarifai(enabled=False)
         # settings
         session.set_upper_follower_count(limit=1500)
         session.set_do_comment(True, percentage=10)
         session.set_comments(settings['comments'])
         # actions
-        session.like_by_tags(settings['tags'], amount=15)
+        session.like_by_tags(settings['tags'], amount=1, skip_top_posts=False)
         # Follow user based on hashtags (without liking the image)
-        session.follow_by_tags(['tag1', 'tag2'], amount=10)
+        # session.follow_by_tags(settings['tags'], amount=10)
 
     finally:
         # end the bot session

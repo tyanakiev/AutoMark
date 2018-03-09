@@ -8,9 +8,6 @@ class InstagramAccount(models.Model):
     password = models.CharField(max_length=30)
     created_by = models.CharField(max_length=30)
 
-    def set_password(self, raw_password):
-        self.password = make_password(raw_password)
-
 
 class InstagramSettings(models.Model):
 
@@ -21,7 +18,6 @@ class InstagramSettings(models.Model):
     comments_hour = models.CharField(max_length=32)
     follows_hour = models.CharField(max_length=32)
     unfollows_hour = models.CharField(max_length=32)
-    posted = models.CharField(max_length=32)
     comments = models.CharField(max_length=32)
 
 

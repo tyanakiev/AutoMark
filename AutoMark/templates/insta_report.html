@@ -2,4 +2,8 @@
 {% load static %}
 {% block content %}
     <h1 class="page-header">Report for user: {{ account.username }}</h1>
+{#    {{ content }}#}
+    {% for item in content %}
+        <p>{{ item }}</p>
+    {% endfor %}
 {% endblock %}

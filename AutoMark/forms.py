@@ -77,13 +77,6 @@ class InstagramSettingsForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
-    posted = forms.CharField(
-        required=False,
-        label='Posted',
-        max_length=32,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
-    )
-
     comments = forms.CharField(
         required=False,
         label='Comments',
