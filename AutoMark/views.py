@@ -75,7 +75,6 @@ def i_worker_start(request, pk=None):
                       'unfollows_hour': int(current_settings.unfollows_hour),
                       'comments': current_settings.comments.split(',')  # ['Wow', 'Amazing', 'Super!', 'This looks amazing.']}
                       }
-    print(insta_settings)
     insta_py.delay(insta_settings, pk)
     return redirect('instagram')
 
@@ -134,7 +133,6 @@ def read_instagram_log_file(path):
 
 def instagram_report(request, pk=None):
     instagram_account = InstagramAccount.objects.get(id=pk)
-    print(dir(instagram_account))
     log_file_path = os.path.join('logs', instagram_account.username, 'general.log')
     content = read_instagram_log_file(log_file_path)
     return render(request, 'insta_report.html', {'account': instagram_account,

@@ -71,3 +71,34 @@
 .insta_add_button{
     margin-left: 85px;
 }
+
+.inst_container {
+    width: 800px;
+    max-height: 500px;
+    margin: 10px;
+    border: 1px solid #fff;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+.inst_mainbody,
+.inst_header{
+    padding: 5px;
+}
+.inst_mainbody {
+    margin-top: 0;
+    min-height: 150px;
+    max-height: 388px;
+    overflow: auto;
+}
+.inst_header {
+    height: 40px;
+    font-size: 28px;
+    border-bottom: 1px solid #EEE;
+    background-color: #ffffff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.num_of{
+    width: 50px;
+}

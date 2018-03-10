@@ -3,17 +3,125 @@
 {% block content %}
     <form action="{% url 'instagram_settings' id %}" method="post">
         {% csrf_token %}
-        {{ form }}
-        <div clas="task_status">
-            Status: {{ task.status }}
+
+
+        <div class="inst_container">
+            <div class="inst_header">Tags</div>
+            <div class="inst_mainbody">
+                <p>
+                    <label for="{{ form.tags.id_for_label }}">Tags to like:</label>
+                    {{ form.tags }}
+                </p>
+                <p>
+                    <label for="{{ form.likes_per_tag.id_for_label }}">Likes per tag:</label>
+                    {{ form.likes_per_tag }}
+                </p>
+                <p>
+                    <label for="{{ form.percent_to_follow.id_for_label }}">Per cent of people to follow:</label>
+                    {{ form.percent_to_follow }}
+                </p>
+                <p>
+                    <label for="{{ form.dont_like_tags.id_for_label }}">Tags to NOT like:</label>
+                    {{ form.dont_like_tags }}
+                </p>
+                <p>
+                    <label for="{{ form.skip_top_posts.id_for_label }}">Skip top posts:</label>
+                    {{ form.skip_top_posts }}
+                </p>
+            </div>
         </div>
-        <input type="submit" value="Save" />
+
+        <div class="inst_container">
+            <div class="inst_header">Locations:</div>
+            <div class="inst_mainbody">
+                <label for="{{ form.locations.id_for_label }}">Locations:</label>
+                {{ form.locations }}
+                <p>Browsing <a target="_blank" href="https://www.instagram.com/explore/locations/">www.instagram.com/explore/locations/</a></p>
+                <p>You can use the search to find your location.</p>
+                <p>After that copy the end of the URL for example: <b>260959778/purvomai/</b></p>
+            </div>
+        </div>
+
+        <div class="inst_container">
+            <div class="inst_header">Images</div>
+            <div class="inst_mainbody">
+                <p>
+                    <label for="{{ form.dont_like_images.id_for_label }}">Will not like images if contains tag.:</label>
+                    {{ form.dont_like_images }}
+                </p>
+                <p>
+                    <label for="{{ form.comments_images.id_for_label }}">Comments on images:</label>
+                    {{ form.comments_images }}
+                </p>
+                <p>
+                    <label for="{{ form.percent_of_img_commented.id_for_label }}">Per cent of images commented:</label>
+                    {{ form.percent_of_img_commented }}
+                </p>
+            </div>
+        </div>
+
+        <div class="inst_container">
+            <div class="inst_header">Videos</div>
+            <div class="inst_mainbody">
+                <p>
+                    <label for="{{ form.comments_video.id_for_label }}">Comments on video:</label>
+                    {{ form.comments_video }}
+                </p>
+            </div>
+        </div>
+
+        <div class="inst_container">
+            <div class="inst_header">Like posts of given users:</div>
+            <div class="inst_mainbody">
+                <p>
+                    <label for="{{ form.users_to_like_posts.id_for_label }}">Users:</label>
+                    {{ form.users_to_like_posts }}
+                </p>
+                <p>
+                    <label for="{{ form.amount_of_likes.id_for_label }}">Amount of likes</label>
+                    {{ form.amount_of_likes }}
+                </p>
+                <p>
+                    <label for="{{ form.random_likes.id_for_label }}">Random likes:</label>
+                    {{ form.random_likes }}
+                </p>
+            </div>
+        </div>
+
+        <div class="inst_container">
+            <div class="inst_header">Likes by feed</div>
+            <div class="inst_mainbody">
+                <p>
+                    <label for="{{ form.likes_of_likes.id_for_label }}">Amount of likes:</label>
+                    {{ form.likes_of_likes }}
+                </p>
+                <p>
+                    <label for="{{ form.randomize_posts_liked.id_for_label }}">Randomize posts liked:</label>
+                    {{ form.randomize_posts_liked }}
+                </p>
+                <p>
+                    <label for="{{ form.unfollow_if_inappropriate_tag.id_for_label }}">Unfollow if post contains 'Tags to NOT like':</label>
+                    {{ form.unfollow_if_inappropriate_tag }}
+                </p>
+                <p>
+                    <label for="{{ form.interact_with_user.id_for_label }}">Visit author profile and like pics:</label>
+                    {{ form.interact_with_user }}
+                </p>
+            </div>
+        </div>
+
+        <div clas="task_status">
+            <p>Status: <b>{{ task.status }}</b></p>
+        </div>
+        <a href="{% url 'instagram_settings' pk=id %}">
+             <input type="button" class="btn-info" value="Save" />
+        </a>
         <a href="{% url 'i_worker_start' pk=id %}">
-            <input type="button" value="Start" />
+            <input type="button" class="btn-success" value="Start" />
         </a>
         <a href="{% url 'i_worker_stop' pk=id %}">
-            <input type="button" value="Stop" />
+            <input type="button" class="btn-danger" value="Stop" />
         </a>
     </form>
-
+    </br>
 {% endblock %}
